@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
+import Auth from '../../../hoc/auth'
+
 function LandingPage(props) {
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('/api/hello')
@@ -13,7 +16,7 @@ function LandingPage(props) {
         axios.get(`/api/users/logout`)
             .then(response => {
                 if (response.data.success) {
-                    props.history.push("/login")
+                    navigate("/login")
                 } else {
                     alert('로그아웃 하는데 실패 했습니다.')
                 }
@@ -35,4 +38,4 @@ function LandingPage(props) {
     )
 }
 
-export default withRouter(LandingPage)
+export default Auth(LandingPage, null);
